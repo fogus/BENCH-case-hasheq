@@ -108,25 +108,25 @@
           kbar (constantly :bar)
           kbaz (constantly :baz)]
       (run-benchmark (str "case on") (/ iterations 1)
-                     (+ (check-case-strings (foo))
-                        (check-case-strings (bar))
-                        (check-case-strings (baz))
+                     (+ (check-case-strings "foo")
+                        (check-case-strings "bar")
+                        (check-case-strings "baz")
                         (check-case-strings "quux"))
 
-                     (+ (check-case-nums (one))
-                        (check-case-nums (two))
-                        (check-case-nums (thr))
+                     (+ (check-case-nums 1)
+                        (check-case-nums 2)
+                        (check-case-nums 3)
                         (check-case-nums 4))
 
-                     (+ (check-case-keywords (kfoo))
-                        (check-case-keywords (kbar))
-                        (check-case-keywords (kbaz))
+                     (+ (check-case-keywords :foo)
+                        (check-case-keywords :bar)
+                        (check-case-keywords :baz)
                         (check-case-keywords :quux))
 
-                     (+ (check-case-tuple [(kfoo) 1])
-                        (check-case-tuple [(kbar) 2])
-                        (check-case-tuple [(kbaz) 3])
-                        (check-case-tuple [:quux 0])))))
+                     (+ (check-case-tuple [:foo 1])
+                        (check-case-tuple [:bar 2])
+                        (check-case-tuple [:baz 3])
+                        (check-case-tuple [(int -1) 0])))))
 )
 
 
