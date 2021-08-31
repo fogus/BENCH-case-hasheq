@@ -61,6 +61,34 @@
        (compare-benchmark ~amt-per-iter ~afn-map)
        (println "\n********************************\n"))))
 
+(defn check-case-strings [arg]
+  (case arg
+    "foo" 1
+    "bar" 2
+    "baz" 3
+    0))
+
+(defn check-case-nums [arg]
+  (case arg
+    1 1
+    2 2
+    3 3
+    0))
+
+(defn check-case-keywords [arg]
+  (case arg
+    :foo 1
+    :bar 2
+    :baz 3
+    0))
+
+(defn check-case-tuple [arg]
+  (case arg
+    [:foo 1] 1
+    [:bar 2] 2
+    [:baz 3] 3
+    0))
+
 (defn bench
   [{:keys [iterations] :as opts :or {iterations 1000000}}]
   (println "  Clojure version " *clojure-version*)
@@ -70,7 +98,48 @@
         size-lg  1000
         size-xl  10000
         size-xxl 100000]
-    (let [data (->> (for [i (range size-xxl)] [i i]) (into {}))]
-      (run-benchmark (str "TODO") (/ iterations 1)
-                     (+ 1 2))))
+    (let [foo (constantly "foo")
+          bar (constantly "bar")
+          baz (constantly "baz")
+          one (constantly 1)
+          two (constantly 2)
+          thr (constantly 3)
+          kfoo (constantly :foo)
+          kbar (constantly :bar)
+          kbaz (constantly :baz)]
+      (run-benchmark (str "case on") (/ iterations 1)
+                     (+ (check-case-strings (foo))
+                        (check-case-strings (bar))
+                        (check-case-strings (baz))
+                        (check-case-strings "quux"))
+
+                     (+ (check-case-nums (one))
+                        (check-case-nums (two))
+                        (check-case-nums (thr))
+                        (check-case-nums 4))
+
+                     (+ (check-case-keywords (kfoo))
+                        (check-case-keywords (kbar))
+                        (check-case-keywords (kbaz))
+                        (check-case-keywords :quux))
+
+                     (+ (check-case-tuple [(kfoo) 1])
+                        (check-case-tuple [(kbar) 2])
+                        (check-case-tuple [(kbaz) 3])
+                        (check-case-tuple [:quux 0])))))
+)
+
+
+(comment
+
+  (case [-1] [-1] true false)
+
+  (case [">" (compare 2 3)]
+    [">" -1] true
+    false)
+
+  (let [ary (int-array [-5 -4 -3 -2 -1 0 1 2 3 4 5])]
+    (case [(aget ary (rand-int 12))]
+      [(int -1)] true
+      false))
 )
