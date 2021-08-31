@@ -126,7 +126,7 @@
                      (+ (check-case-tuple [:foo 1])
                         (check-case-tuple [:bar 2])
                         (check-case-tuple [:baz 3])
-                        (check-case-tuple [(int -1) 0])))))
+                        (check-case-tuple [:quux 0])))))
 )
 
 

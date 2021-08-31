@@ -1,7 +1,7 @@
 {
  :paths ["src" "classes"]
- :deps  {org.clojure/clojure {:mvn/version "1.11.0-alpha1"}}
- ;;:deps  {org.clojure/clojure {:mvn/version "1.11.0-master-SNAPSHOT"}}
+ ;;:deps  {org.clojure/clojure {:mvn/version "1.11.0-alpha1"}}
+ :deps  {org.clojure/clojure {:mvn/version "1.11.0-master-SNAPSHOT"}}
 
  :aliases
  {
